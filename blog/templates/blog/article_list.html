@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+
+{% block title_block %}
+  {% if article_list %}
+    {% with article_list|first as firstarticle%}
+      {{ firstarticle.topic_name }}
+    {% endwith %}
+  {% else %}
+    Articles
+  {% endif %}
+{% endblock %}
+
+{% block content%}
+<br>
+    {% for article in article_list %}
+
+          <!-- Article Title -->
+          <a href="{% url 'blog:article_detail' pk=article.pk %}">
+            <h3>{{ article.title }}</h3>
+          </a>
+
+          <!-- Article Published or Created Date -->
+          {% if article.published_date %}
+          <p>Published Date: {{ article.published_date }}</p>
+          {% else %}
+          <p>Created Date: {{ article.created_date }}</p>
+          {% endif %}
+
+          <!-- Article Author -->
+          <p>Author: <a href="#">{{ article.author }}</a></p>
+
+          <hr>
+
+    {% endfor %}
+{% endblock %}

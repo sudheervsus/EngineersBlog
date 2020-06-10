@@ -1,0 +1,16 @@
+from django.urls import path
+from blog import views
+
+app_name = 'blog'
+
+urlpatterns = [
+    path('', views.TopicListView.as_view(), name='topic_list'),
+    path('topics/<int:pk>/', views.TopicArticlesListView, name ='topic_articles_list'),
+    path('article/<int:pk>/', views.ArticleDetailView.as_view(), name='article_detail'),
+    path('article/createnew/', views.CreateArticleView.as_view(), name='article_create_new'),
+    path('article/<int:pk>/edit/', views.UpdateArticleView.as_view(), name='article_edit'),
+    path('article/<int:pk>/remove/', views.DeleteArticleView.as_view(), name='article_remove'),
+    path('drafts/', views.DraftsArticleListView.as_view(), name='article_drafts'),
+    path('about/', views.AboutView.as_view(), name='about'),
+
+]

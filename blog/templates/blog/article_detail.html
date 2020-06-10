@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block title_block %}
+{{ article.title }}
+{% endblock %}
+
+{% block content%}
+<br>
+  <div class="container">
+    <h1 class="articleTitleClass">{{ article.title }}</h1>
+
+    <p>published: {{ article.published_date }} | Author: {{ article.author }}</p>
+    <hr>
+
+    <article class="articleContentClass">
+        {{ article.article_content }}
+    </article>
+    <br>
+    <h4>References:</h4>
+    <p>{{article.references}}</p>
+  </div>
+
+  <div class="container">
+    <a class='btn btn-danger' href="{% url 'blog:article_remove' pk=article.pk %}" name="button">Delete</a>
+  </div>
+{% endblock %}

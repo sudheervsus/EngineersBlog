@@ -1,0 +1,15 @@
+.mynavi{
+  height: 70px;
+}
+
+.brandLogoClass{
+  font-size: 1.6em;
+}
+
+.articleTitleClass{
+  text-align: left;
+}
+
+.articleContentClass{
+  text-align: justify;
+}

@@ -3,10 +3,13 @@ from django.utils import timezone
 from django.urls import reverse
 # Create your models here.
 class Topic(models.Model):
-    topic_name = models.CharField(max_length=300)
+    topic_name = models.CharField(max_length=300, help_text="Add the subject/topic you want to create articles about.")
 
     def get_absolute_url(self):
         return reverse('blog:topics_list', kwargs={'pk': self.pk})
+
+    def published_articles(self):
+        return self.articles.filter(published_date__lte=timezone.now()).order_by('published_date')
 
     def __str__(self):
         return self.topic_name
@@ -16,6 +19,7 @@ class Article(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
     article_content = models.TextField()
+    references = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(default = timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

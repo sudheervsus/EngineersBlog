@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title_block %}
+Engineers Blog
+{% endblock %}
+
+{% block content%}
+<br>
+  <div class="row">
+    {% for topic in topic_list %}
+      <div class="col-sm-4">
+        <div class="jumbotron">
+            <!-- <img src="../static/blog/imgs/django-logo-big.jpg" class="img-thumbnail" alt="{{ topic.topic_name }}"> -->
+            <a href="{% url 'blog:topic_articles_list' pk=topic.pk %}">
+              <h3>{{ topic.topic_name }}</h3>
+            </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}
