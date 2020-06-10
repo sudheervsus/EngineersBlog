@@ -27,7 +27,7 @@
           {% endif %}
 
           <!-- Article Author -->
-          <p>Author: <a href="#">{{ article.author }}</a></p>
+          <p>Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">{{ article.author.first_name }} {{ article.author.last_name }}</a></p>
 
           <hr>
 

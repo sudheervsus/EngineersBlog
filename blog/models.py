@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 # Create your models here.
 class Topic(models.Model):
     topic_name = models.CharField(max_length=300, help_text="Add the subject/topic you want to create articles about.")
@@ -18,8 +19,10 @@ class Article(models.Model):
     topic_name = models.ForeignKey(Topic, related_name='articles', on_delete=models.CASCADE)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
-    article_content = models.TextField()
-    references = models.TextField(blank=True, null=True)
+    # article_content = models.TextField()
+    article_content = RichTextField(config_name='awesome_ckeditor')
+    # references = models.TextField(blank=True, null=True)
+    references = RichTextField(config_name='awesome_ckeditor')
     created_date = models.DateTimeField(default = timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 

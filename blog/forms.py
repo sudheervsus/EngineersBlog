@@ -1,5 +1,6 @@
 from django import forms
 from blog.models import ( Topic, Article )
+from ckeditor.widgets import CKEditorWidget
 
 class TopicForm(forms.ModelForm):
     class Meta():
@@ -13,6 +14,7 @@ class TopicForm(forms.ModelForm):
         }
 
 class ArticleForm(forms.ModelForm):
+
     class Meta():
         model = Article
         fields = [ 'topic_name', 'author', 'title', 'article_content', 'references']
@@ -24,6 +26,8 @@ class ArticleForm(forms.ModelForm):
             'topic_name':forms.Select(attrs = {'class':'form-control'}),
             'author':forms.Select(attrs = {'class':'form-control'}),
             'title':forms.TextInput(attrs = {'class':'form-control'}),
-            'article_content': forms.Textarea(attrs = {'class':'form-control'}),
-            'references':forms.Textarea(attrs = {'class':'form-control'}),
+            # 'article_content': forms.Textarea(attrs = {'class':'form-control'}),
+            'article_content': CKEditorWidget(config_name='awesome_ckeditor'),
+            'references':CKEditorWidget(config_name='awesome_ckeditor'),
+            # 'references':forms.Textarea(attrs = {'class':'form-control'}),
         }

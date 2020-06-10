@@ -26,6 +26,12 @@ def TopicArticlesListView(request, pk):
     print(article_list)
     return render(request,'article_list.html',{'article_list':article_list})
 
+#Needs To be worked on. *****INCOMPLETE*****
+def AuthorArticlesListView(request, pk):
+    article_list = Article.objects.filter(author__pk = pk).filter(published_date__isnull=False).order_by('-created_date')
+    print(article_list, pk)
+    return render(request,'article_list.html',{'article_list':article_list})
+
 
 class ArticleDetailView(DetailView):
     model = Article

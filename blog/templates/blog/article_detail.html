@@ -8,19 +8,32 @@
 <br>
   <div class="container">
     <h1 class="articleTitleClass">{{ article.title }}</h1>
+    <hr>
 
-    <p>published: {{ article.published_date }} | Author: {{ article.author }}</p>
+      <div class="authorClass">
+          Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">{{ article.author.first_name }} {{ article.author.last_name }}</a>
+      </div>
+
+      {% if article.published_date %}
+      <div class="publishDateClass">
+        published: {{ article.published_date }}
+      </div>
+      {% else %}
+        <a class='btn btn-outline-warning btn-sm' href="{% url 'blog:article_publish' pk=article.pk %}">Publish</a>
+      {% endif %}
+
     <hr>
 
     <article class="articleContentClass">
-        {{ article.article_content }}
+        {{ article.article_content|safe|linebreaksbr }}
     </article>
     <br>
     <h4>References:</h4>
-    <p>{{article.references}}</p>
+    <p>{{article.references|safe|linebreaksbr}}</p>
   </div>
 
   <div class="container">
-    <a class='btn btn-danger' href="{% url 'blog:article_remove' pk=article.pk %}" name="button">Delete</a>
+    <a class='btn btn-info' href="{% url 'blog:article_edit' pk=article.pk %}">Update</a>
+    <a class='btn btn-danger' href="{% url 'blog:article_remove' pk=article.pk %}">Delete</a>
   </div>
 {% endblock %}
