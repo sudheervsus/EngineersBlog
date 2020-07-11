@@ -37,18 +37,19 @@ class ArticleDetailView(DetailView):
     model = Article
 
 class CreateArticleView(LoginRequiredMixin, CreateView):
-    login_url = '/login/'
+    login_url = 'accounts/login/'
     redirect_field_name = 'blog/article_detail.html'
     form_class = ArticleForm
     model = Article
 
 class UpdateArticleView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
+    login_url = 'accounts/login/'
     redirect_field_name = 'blog/article_detail.html'
     form_class = ArticleForm
     model = Article
 
 class DeleteArticleView(LoginRequiredMixin, DeleteView):
+    login_url = 'accounts/login/'
     model = Article
     success_url = reverse_lazy('blog:topic_list')
 
