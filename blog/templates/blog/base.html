@@ -8,12 +8,29 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- WebsiteLocal CSS -->
     <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
+
+    <!-- FontAwesome Kit -->
+    <script src="https://kit.fontawesome.com/37d5bb1211.js" crossorigin="anonymous"></script>
+
+    <!-- fonts -->
+    <!-- font-family: 'Monoton', cursive; -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet"> -->
+
+    <!-- font-family: 'Merriweather Sans', sans-serif; -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet"> -->
+
+    <!-- font-family: 'Alegreya', serif; -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Alegreya&display=swap" rel="stylesheet"> -->
+
+    <!-- font-family: 'Nunito', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+
   </head>
   <body>
     <nav class='navbar navbar-expand-sm navbar-light mynavi'>
       <div class="container">
         <!-- Brand -->
-        <a class='navbar-brand brandLogoClass' href="{% url 'blog:topic_list' %}">Engineers Blog</a>
+        <a class='navbar-brand brandLogoClass' href="{% url 'blog:topic_list' %}"><b>Engineers</b> Blog</a>
         <!-- Toggle Button -->
         <button class='navbar-toggler' type="button" data-toggle='collapse' data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggle-icon" aria-hidden='true'></span>
@@ -34,18 +51,17 @@
           </ul> -->
 
           <ul class="navbar-nav ml-auto">
-
-            {% if user.is_authenticated %}
+            <li class='nav-item'>
+              <a class='nav-link' href="{% url 'blog:topic_create_new'%}">New Topic</a>
+            </li>
             <li class='nav-item'>
               <a class='nav-link' href="{% url 'blog:article_create_new'%}">New Article</a>
             </li>
             <li class='nav-item'>
               <a class='nav-link' href="{% url 'blog:article_drafts'%}">Drafts</a>
             </li>
-            <!-- <li class='nav-item'>
-              <a class='nav-link' href="#">something</a>
-            </li> -->
 
+            {% if user.is_authenticated %}
               <li class='nav-item dropdown'>
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{ user.get_username | title }}
@@ -71,19 +87,50 @@
       </div>
 
     </nav>
-    <hr>
-    <div class="container">
-      {% block content%}
-      {% endblock %}
-    </div>
 
+        {% block content%}
+        {% endblock %}
+
+    <footer class="page-footer mt-auto">
+      <hr>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <a class="footerBrand" style="font-size:1.6em" href="{% url 'blog:topic_list' %}"><b>Engineers</b> Blog</a>
+            <table border="0">
+              <tr>
+                <td>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+                </td>
+                <td> </td>
+                <!-- <td>
+                  <i class="fa fa-twitter"></i>
+                </td> -->
+              </tr>
+            </table>
+          </div>
+
+          <div class="col-sm-4">
+            <p></p>
+            <p>
+              © 2020 <a href="mailto:sudheerduggireddy@gmail.com">Sudheer Duggireddy</a>
+            </p>
+          </div>
+
+          <div class="col-sm-4">
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- CKEditor -->
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <!-- Bootstrap JS JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS JQuery CDN -->
   </body>
-  <!-- CKEditor -->
-  <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-  <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-  <!-- Bootstrap JS JQuery CDN -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  <!-- Bootstrap JS JQuery CDN -->
+
 </html>

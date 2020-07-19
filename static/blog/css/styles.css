@@ -4,8 +4,22 @@
 
 .brandLogoClass{
   font-size: 1.6em;
+  font-family: 'Monoton', cursive;
 }
 
-/* .jumbotron{
-  background-color: #FFFFFF;
-} */
+.articleTitleClass{
+  text-align: center;
+}
+
+.articleContentClass{
+  font-family: 'Nunito', sans-serif;
+  text-align: justify;
+  letter-spacing: normal;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1em;
+}
+
+.footerBrand{
+  font-size: 1.6em;
+}

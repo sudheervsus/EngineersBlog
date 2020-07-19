@@ -5,6 +5,7 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 class Topic(models.Model):
     topic_name = models.CharField(max_length=300, help_text="Add the subject/topic you want to create articles about.")
+    topic_description = RichTextField(config_name='awesome_ckeditor')
 
     def get_absolute_url(self):
         return reverse('blog:topics_list', kwargs={'pk': self.pk})
@@ -35,3 +36,14 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comments(models.Model):
+    title = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
+    author_email = models.EmailField(max_length=200, blank=False, default='user@Engineers.com')
+    author = models.TextField(blank=False, max_length=300)
+    comment_content = models.TextField(blank=False)
+    created_date = models.DateTimeField(default = timezone.now)
+    # published_date = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.author + "; "+self.comment_content

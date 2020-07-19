@@ -1,9 +1,24 @@
 .mynavi{
   height: 70px;
 }
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+}
+
+.page-footer{
+  padding-top: 50px;
+  padding-bottom: 10px;
+}
 
 .brandLogoClass{
-  font-size: 1.6em;
+  font-size: 1.8em;
+  font-family: 'Nunito', sans-serif;
 }
 
 .articleTitleClass{
@@ -11,5 +26,18 @@
 }
 
 .articleContentClass{
+  font-family: 'Nunito', sans-serif;
   text-align: justify;
+  letter-spacing: normal;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1em;
+}
+
+.topicListClass a:link{
+  color:black;
+}
+.footerBrand{
+  font-size: 1.6em;
+  color: black
 }

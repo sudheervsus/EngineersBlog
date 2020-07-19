@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +11,7 @@ from django.views.generic import CreateView
 @login_required
 def user_logout(request):
     logout(request)
-    return render(request, '../../../blog/templates/blog/topic_list.html')
+    return redirect('blog:topic_list')
 
 class UserSignUpView(CreateView):
     model = User
@@ -22,18 +22,18 @@ class UserSignUpView(CreateView):
 def user_login(request):
 
     if request.method == 'POST':
-        print("---------------In POST")
+        # print("---------------In POST")
         username = request.POST.get('username')
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
 
         if user:
-            print("---------------Authenticated")
+            # print("---------------Authenticated")
             if user.is_active:
-                print("---------------Active")
+                # print("---------------Active")
                 login(request, user)
-                return render(request, '../../../blog/templates/blog/topic_list.html')
+                return redirect('blog:topic_list')
             else:
                 return HttpResponseBadRequest('Account Not Activated.')
         else:

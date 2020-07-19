@@ -1,39 +1,90 @@
 {% extends 'blog/base.html' %}
-
+{% load tz %}
 {% block title_block %}
 {{ article.title }}
 {% endblock %}
 
 {% block content%}
 <br>
-  <div class="container">
-    <h1 class="articleTitleClass">{{ article.title }}</h1>
-    <hr>
-
-      <div class="authorClass">
-          Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">{{ article.author.first_name }} {{ article.author.last_name }}</a>
-      </div>
-
-      {% if article.published_date %}
-      <div class="publishDateClass">
-        published: {{ article.published_date }}
-      </div>
-      {% else %}
-        <a class='btn btn-outline-warning btn-sm' href="{% url 'blog:article_publish' pk=article.pk %}">Publish</a>
-      {% endif %}
-
-    <hr>
-
-    <article class="articleContentClass">
-        {{ article.article_content|safe|linebreaksbr }}
-    </article>
-    <br>
-    <h4>References:</h4>
-    <p>{{article.references|safe|linebreaksbr}}</p>
-  </div>
 
   <div class="container">
-    <a class='btn btn-info' href="{% url 'blog:article_edit' pk=article.pk %}">Update</a>
-    <a class='btn btn-danger' href="{% url 'blog:article_remove' pk=article.pk %}">Delete</a>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+
+        <h1 class="articleTitleClass">{{ article.title }}</h1>
+        <hr>
+
+        <div class="authorClass">
+              Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">
+                {% if article.author.first_name %}
+                  {{ article.author.first_name }} {{ article.author.last_name }}
+                {% else %}
+                  {{ article.author }}
+                {% endif %}
+              </a>
+        </div>
+
+        {% if article.published_date %}
+        <div class="publishDateClass">
+          published: {{ article.published_date|localtime }}
+        </div>
+        {% else %}
+          <a class='btn btn-outline-warning btn-sm' href="{% url 'blog:article_publish' pk=article.pk %}">Publish</a>
+        {% endif %}
+
+        <hr>
+
+        <div class="articleContentClass">
+            {{ article.article_content|safe }}
+        </div>
+        <br>
+        <h4>References:</h4>
+        <p>{{article.references|safe}}</p>
+
+        <!-- COMMENTS -->
+        {% if comments.count == 1 %}
+          <h6>{{ comments.count }} Comment</h6>
+        {% else %}
+        <h6>{{ comments.count }} Comments</h6>
+        {% endif %}
+
+        {% for comment in comments %}
+          <div class="comments_section">
+            <p>
+              &emsp;<b>{{comment.author}}</b> on <i>{{comment.created_date|localtime}}</i>
+            </p>
+            <p>&emsp;&emsp;{{comment.comment_content}}</p>
+            <br>
+          </div>
+        {% endfor %}
+        <br>
+        <!-- COMMENTS -->
+
+        <!-- NEW COMMENTS FORM -->
+        <!-- Comment form -->
+        <div class="container">
+          <div class="jumbotron">
+            <h5>Your Comment</h5>
+              <form class="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="email" class="form-control" name="author_email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="author" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="comment_content" rows="8" cols="80" placeholder="Enter your Commments here"></textarea>
+                </div>
+                <input type="Submit" class='btn btn-info' name="" value="Save">
+              </form>
+          </div>
+        </div>
+        <!-- NEW COMMENTS FORM -->
+
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
   </div>
 {% endblock %}

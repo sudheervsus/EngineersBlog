@@ -11,25 +11,45 @@
 {% endblock %}
 
 {% block content%}
-<br>
-    {% for article in article_list %}
+<div class="container">
+  <br>
+    {% if article_list %}
 
-          <!-- Article Title -->
-          <a href="{% url 'blog:article_detail' pk=article.pk %}">
-            <h4>{{ article.title }}</h4>
+      {% for article in article_list %}
+
+        <!-- Article Title -->
+        <a href="{% url 'blog:article_detail' pk=article.pk %}">
+          <h4>{{ article.title }}</h4>
+        </a>
+
+        <!-- Article Published or Created Date -->
+        {% if article.published_date %}
+        <p>Published Date: {{ article.published_date }}</p>
+        {% else %}
+        <p>Created Date: {{ article.created_date }}</p>
+        {% endif %}
+
+        <!-- Article Author -->
+        <p>
+          Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">
+            {% if article.author.first_name %}
+              {{ article.author.first_name }} {{ article.author.last_name }}
+            {% else %}
+              {{ article.author }}
+            {% endif %}
           </a>
+        </p>
 
-          <!-- Article Published or Created Date -->
-          {% if article.published_date %}
-          <p>Published Date: {{ article.published_date }}</p>
-          {% else %}
-          <p>Created Date: {{ article.created_date }}</p>
-          {% endif %}
+        <hr>
 
-          <!-- Article Author -->
-          <p>Author: <a href="{% url 'blog:author_articles_list' pk=article.author.id %}">{{ article.author.first_name }} {{ article.author.last_name }}</a></p>
+      {% endfor %}
 
-          <hr>
+    {% else %}
+      <h4>No articles found</h4>
+      <a href="{% url 'blog:article_create_new' %}">
+        <button type="button" class="btn btn-success WriteArticleButton" name="button">Write Article</button>
+      </a>
+    {% endif %}
 
-    {% endfor %}
+</div>
 {% endblock %}

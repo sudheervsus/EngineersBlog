@@ -5,8 +5,9 @@ app_name = 'blog'
 
 urlpatterns = [
     path('', views.TopicListView.as_view(), name='topic_list'),
-    path('topics/<int:pk>/', views.TopicArticlesListView, name ='topic_articles_list'),
-    path('author/<int:pk>/', views.AuthorArticlesListView, name ='author_articles_list'),
+    path('topics/<int:pk>/', views.TopicArticlesListView.as_view(), name ='topic_articles_list'),
+    path('topics/createnew/', views.CreateTopicView.as_view(), name='topic_create_new'),
+    path('author/<int:pk>/', views.AuthorArticlesListView.as_view(), name ='author_articles_list'),
     path('article/<int:pk>/', views.ArticleDetailView.as_view(), name='article_detail'),
     path('article/createnew/', views.CreateArticleView.as_view(), name='article_create_new'),
     path('article/<int:pk>/edit/', views.UpdateArticleView.as_view(), name='article_edit'),
