@@ -1,14 +1,27 @@
 .mynavi{
   height: 70px;
 }
+html, body{
+  height: 100%;
+  margin: 0;
+}
 
-.brandLogoClass{
-  font-size: 1.6em;
-  font-family: 'Monoton', cursive;
+body{
+  display: flex;
+  flex-direction: column;
+}
+
+.page-footer{
+  padding-top: 50px;
+  padding-bottom: 10px;
 }
 
 .articleTitleClass{
-  text-align: center;
+  text-align: left;
+}
+
+.aboutArticleData button{
+  float:right;
 }
 
 .articleContentClass{
@@ -20,6 +33,11 @@
   font-size: 1.1em;
 }
 
+.topicListClass a:link{
+  color:black;
+}
+
 .footerBrand{
   font-size: 1.6em;
+  color: black
 }

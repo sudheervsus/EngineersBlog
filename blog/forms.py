@@ -1,50 +1,67 @@
 from django import forms
-from blog.models import ( Topic, Article, Comments )
+from blog.models import ( Subject, Article, Chapter, Comment )
 from ckeditor.widgets import CKEditorWidget
 
-class TopicForm(forms.ModelForm):
+class SubjectForm(forms.ModelForm):
     class Meta():
-        model = Topic
-        fields = ['topic_name', 'topic_description']
+        model = Subject
+        fields = ['subject_name', 'branch', 'subject_description']
         labels = {
-            'topic_name':'Subject/Topic',
-            'topic_description':'Description'
+            'subject_name':'Subject',
+            'subject_description':'Description'
         }
         widgets = {
-            'topic_name': forms.TextInput(attrs = {'class': 'form-control'}),
-            'topic_description': CKEditorWidget(config_name='awesome_ckeditor'),
+            'subject_name': forms.TextInput(attrs = {'class': 'form-control'}),
+            'branch': forms.Select(attrs = {'class': 'form-control'}),
+            'subject_description': CKEditorWidget(config_name='awesome_ckeditor'),
         }
+
+class ChapterForm(forms.ModelForm):
+    class Meta():
+        model = Chapter
+        fields = ['subject_name', 'chapter_name', 'chapter_number']
+
+        widgets = {
+            'subject_name':forms.Select(attrs = {'class':'form-control'}),
+            'chapter_name':forms.TextInput(attrs = {'class':'form-control'}),
+            'chapter_number':forms.NumberInput(attrs = {'class':'form-control'}),
+        }
+
 
 class ArticleForm(forms.ModelForm):
 
     class Meta():
         model = Article
-        fields = [ 'topic_name', 'author', 'title', 'article_content', 'references']
+        fields = [ 'subject_name', 'chapter_name', 'author', 'title', 'article_number', 'article_content', 'references']
         labels ={
-            'topic_name':'Subject/Topic',
+            'subject_name':'Subject',
             'article_content': 'Article',
         }
         widgets = {
-            'topic_name':forms.Select(attrs = {'class':'form-control'}),
+            'subject_name':forms.Select(attrs = {'class':'form-control'}),
+            'chapter_name':forms.Select(attrs = {'class':'form-control'}),
             'author':forms.Select(attrs = {'class':'form-control'}),
             'title':forms.TextInput(attrs = {'class':'form-control'}),
+            'article_number': forms.NumberInput(attrs = {'class':'form-control'}),
             # 'article_content': forms.Textarea(attrs = {'class':'form-control'}),
             'article_content': CKEditorWidget(config_name='awesome_ckeditor'),
             'references':CKEditorWidget(config_name='awesome_ckeditor'),
             # 'references':forms.Textarea(attrs = {'class':'form-control'}),
         }
 
-# class CommentsForm(forms.ModelForm):
-#
-#     class Meta():
-#         model = Comments
-#         fields = ['author', 'comment_content']
-#         labels ={
-#             'author':'Email',
-#             'comment_content': 'Comment',
-#         }
-#
-#     widgets = {
-#         'author':forms.TextInput(attrs = {'class':'form-control'}),
-#         'comment_content': forms.Textarea(attrs = {'class':'form-control'}),
-#     }
+class CommentForm(forms.ModelForm):
+
+    class Meta():
+        model = Comment
+        fields = ['author', 'author_email', 'comment_content']
+        labels ={
+            'author':'Name',
+            'author_email':'Email',
+            'comment_content': 'Comment',
+        }
+
+    widgets = {
+        'author':forms.TextInput(attrs = {'class':'form-control'}),
+        'author_email':forms.EmailInput(attrs = {'class':'form-control'}),
+        'comment_content': forms.Textarea(attrs = {'class':'form-control'}),
+    }

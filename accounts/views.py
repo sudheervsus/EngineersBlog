@@ -11,13 +11,14 @@ from django.views.generic import CreateView
 @login_required
 def user_logout(request):
     logout(request)
-    return redirect('blog:topic_list')
+    return redirect('blog:subject_list')
 
 class UserSignUpView(CreateView):
     model = User
     form_class = forms.UserSignUPForm
     success_url = reverse_lazy('accounts:login')
     template_view = 'accounts/signup.html'
+
 
 def user_login(request):
 
@@ -33,7 +34,7 @@ def user_login(request):
             if user.is_active:
                 # print("---------------Active")
                 login(request, user)
-                return redirect('blog:topic_list')
+                return redirect('blog:subject_list')
             else:
                 return HttpResponseBadRequest('Account Not Activated.')
         else:

@@ -2,67 +2,34 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import (Article, Topic, Comments)
-from blog.forms import (ArticleForm, TopicForm)
+from blog.models import (Article, Subject, Comment, Chapter)
+from blog.forms import (ArticleForm, SubjectForm, CommentForm, ChapterForm)
+from django.views import View
 from django.views.generic import (TemplateView, ListView,
                                     DetailView, CreateView,
-                                    UpdateView, DeleteView,)
+                                    UpdateView, DeleteView)
 
 # Create your views here.
 #About View
 class AboutView(TemplateView):
     template_name = "about.html"
 
-class TopicListView(ListView):
-    model = Topic
+class SubjectListView(ListView):
+    model = Subject
 
-class TopicArticlesListView(ListView):
-    template_name = 'article_list.html'
-    context_object_name = 'article_list'
-
-    def get_queryset(self):
-        return Article.objects.filter(topic_name__pk = self.kwargs['pk']).filter(published_date__isnull=False)
-
-class CreateTopicView(LoginRequiredMixin, CreateView):
+class CreateSubjectView(LoginRequiredMixin, CreateView):
     login_url = '/accounts/login/'
-    redirect_field_name = 'blog/topic_form.html'
-    form_class = TopicForm
-    model = Topic
+    redirect_field_name = 'blog/subject_form.html'
+    form_class = SubjectForm
+    model = Subject
 
-# def TopicArticlesListView(request, pk):
-#     article_list = Article.objects.filter(topic_name__pk = pk).filter(published_date__isnull=False)
-#     print(article_list)
-#     return render(request,'article_list.html',{'article_list':article_list})
+class CreateChapterView(LoginRequiredMixin, CreateView):
+    login_url = '/accounts/login/'
+    template_name = 'chapter_form.html'
+    redirect_field_name = 'blog/article_list.html'
+    form_class = ChapterForm
+    model = Chapter
 
-class AuthorArticlesListView(ListView):
-    template_name = 'article_list.html'
-    context_object_name = 'article_list'
-
-    def get_queryset(self):
-        return Article.objects.filter(author__pk = self.kwargs['pk']).filter(published_date__isnull=False).order_by('-created_date')
-
-# #Needs To be worked on. *****INCOMPLETE*****
-# def AuthorArticlesListView(request, pk):
-#     article_list = Article.objects.filter(author__pk = pk).filter(published_date__isnull=False).order_by('-created_date')
-#     return render(request,'article_list.html',{'article_list':article_list})
-
-
-class ArticleDetailView(DetailView):
-    model = Article
-
-    def get(self, request, pk):
-        article = get_object_or_404(Article, pk=pk)
-        comments = Comments.objects.filter(title__pk = pk).order_by('-created_date')
-        return render(request, 'article_detail.html', {'article':article, 'comments':comments})
-
-    def post(self, request, pk):
-        article = get_object_or_404(Article, pk=pk)
-        form = CommentsForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.title = article
-            comment.save()
-            return redirect('blog:article_detail', pk=pk)
 
 class CreateArticleView(LoginRequiredMixin, CreateView):
     login_url = '/accounts/login/'
@@ -79,13 +46,29 @@ class UpdateArticleView(LoginRequiredMixin, UpdateView):
 class DeleteArticleView(LoginRequiredMixin, DeleteView):
     login_url = '/accounts/login/'
     model = Article
-    success_url = reverse_lazy('blog:topic_list')
+    success_url = reverse_lazy('blog:subject_list')
 
-class DraftsArticleListView(ListView):
+class ArticleDetailView(DetailView):
+    model=Article
+
+def subject_content(request, pk):
+    subject = get_object_or_404(Subject, pk=pk)
+    chapters = Chapter.objects.filter(subject_name__pk=pk)
+    articles = Article.objects.filter(subject_name__pk=pk).filter(published_date__isnull=False)
+    context = {
+        'subject':subject,
+        'chapters':chapters,
+        'articles':articles,
+    }
+    return render(request, 'subject_content.html', context=context)
+
+class DraftsArticleListView(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
     model = Article
+    success_url = reverse_lazy('blog:article_drafts')
 
     def get_queryset(self):
-        return Article.objects.filter(published_date__isnull=True).order_by('created_date')
+        return Article.objects.filter(published_date__isnull=True).filter(author__username=self.request.user.username).order_by('created_date')
 
 
 @login_required

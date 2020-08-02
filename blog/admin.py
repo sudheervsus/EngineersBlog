@@ -1,7 +1,8 @@
 from django.contrib import admin
-from blog.models import Topic, Article, Comments
+from blog.models import Subject, Article, Comment, Chapter
 
 # Register your models here.
-admin.site.register(Topic)
+admin.site.register(Subject)
 admin.site.register(Article)
-admin.site.register(Comments)
+admin.site.register(Comment)
+admin.site.register(Chapter)

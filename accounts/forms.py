@@ -7,7 +7,7 @@ class UserSignUPForm(forms.ModelForm):
         model = User
         fields = ['username','email','password','first_name','last_name']
         labels = {
-        'username':'Display Name',
+        'username':'User Name',
         'first_name': "First Name",
         'last_name':'Last Name',
         }
@@ -20,9 +20,8 @@ class UserSignUPForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs = { 'class':'form-control' }),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['username'].label = 'Display Name'
-    #     self.fields['email'].label = 'Email Address'
-    #     self.fields['first_name'].label = 'First Name'
-    #     self.fields['last_name'].label = 'Last Name'
+    def save(self):
+        user = super().save(commit=False)
+        user.set_password(user.password)
+        user.save()
+        return user

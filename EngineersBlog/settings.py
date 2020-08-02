@@ -145,8 +145,9 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_CONFIGS = {
     'awesome_ckeditor': {
-        'skin': 'moono',
-        # 'skin': 'office2013',
+        #'skin': 'moono',
+        'skin': 'moono-lisa',
+        #'skin': 'office2013',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],

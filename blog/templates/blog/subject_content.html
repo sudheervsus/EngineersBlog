@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+{% load tz %}
+{% block title_block %}
+{{ subject.subject_name }}
+{% endblock %}
+
+{% block content%}
+<br>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>{{ subject.subject_name }}</h1>
+      <p>{{ subject.subject_description|safe }}</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-1">
+
+      </div>
+      <div class="col-sm-8">
+        <h2>Contents</h2>
+        <hr>
+        <table>
+          {% for chapter in chapters %}
+          <tr>
+            <th>
+              <h4>{{chapter.chapter_number}} - {{ chapter.chapter_name }}</h4>
+            </th>
+          </tr>
+            {% for article in articles %}
+              {% if article.chapter_name == chapter %}
+                <tr>
+                  <td>
+                    &emsp;&emsp;&emsp;<a href="{% url 'blog:article_detail' pk=article.pk %}">{{ article.title }}</a>
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
