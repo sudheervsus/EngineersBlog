@@ -27,7 +27,7 @@
 
   </head>
   <body>
-    <nav class='navbar navbar-expand-sm navbar-light'>
+    <nav class='navbar navbar-expand-sm bg-dark navbar-dark'>
         <!-- Brand -->
         <a class='navbar-brand BrandLogo' href="{% url 'blog:subject_list' %}"><b>Engineers</b> Blog</a>
         <!-- Toggle Button -->
@@ -122,6 +122,9 @@
 
           <div class="col-sm-4">
             <p></p>
+            <p>
+              <a href="{% url 'blog:about'%}">About Us</a>
+            </p>
           </div>
         </div>
       </div>

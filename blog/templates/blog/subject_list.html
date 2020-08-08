@@ -7,18 +7,14 @@ Engineers Blog
 {% block content%}
 <br>
   <div class="container">
-    <div class="row">
       {% for subject in subject_list %}
-        <div class="col-sm-4">
-          <div class="jumbotron">
+          <div class="jumbotron topicListClass">
               <!-- <img src="../static/blog/imgs/django-logo-big.jpg" class="img-thumbnail" alt="{{ topic.topic_name }}"> -->
-              <a class='topicListClass' href="{% url 'blog:subject_content' pk=subject.pk %}">
+              <a href="{% url 'blog:subject_content' pk=subject.pk %}">
                 <h3>{{ subject.subject_name }}</h3>
               </a>
           </div>
-        </div>
       {% endfor %}
-    </div>
   </div>
 
 {% endblock %}

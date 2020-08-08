@@ -14,8 +14,8 @@ class Subject(models.Model):
     subject_description = RichTextField(config_name='awesome_ckeditor')
     branch = models.CharField(choices=BRANCH_CHOICES, default="CIVIL", max_length=100)
 
-    # def get_absolute_url(self):
-    #     return reverse('blog:subject_articles_list', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        return reverse('blog:subject_content', kwargs={'pk': self.pk})
 
     def published_articles(self):
         return self.articles.filter(published_date__lte=timezone.now()).order_by('published_date')
